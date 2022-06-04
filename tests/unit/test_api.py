@@ -1,7 +1,5 @@
-
 import pytest
 from fastapi.testclient import TestClient
-
 
 TEST_PROGRAMS = [
     "1000 meter swim",
@@ -31,12 +29,8 @@ def test_parse(program_str, api_client: TestClient):
     """
     POST /parse
     """
-    res = api_client.post(
-    	"/parse", 
-    	json = {'message': program_str}
-    )
-    print('\n' + str(res.json()))
-
+    res = api_client.post("/parse", json={"message": program_str})
+    print("\n" + str(res.json()))
 
 
 @pytest.mark.parametrize("program_str", TEST_PROGRAMS)
@@ -44,8 +38,5 @@ def test_timers(program_str, api_client: TestClient):
     """
     POST /timers
     """
-    res = api_client.post(
-    	"/timers", 
-    	json = {'message': program_str}
-    )
-    print('\n' + str(res.json()))
+    res = api_client.post("/timers", json={"message": program_str})
+    print("\n" + str(res.json()))

@@ -32,5 +32,11 @@ async def parse(content: Request):
 
 
 @app.post("/timers")
-async def parse(content: Request):
-    return json.loads(json.dumps(Program.from_ir(fitest_lang.dsl.parse(content.message)).to_timer_objs().to_json()))
+async def timers(content: Request):
+    return json.loads(
+        json.dumps(
+            Program.from_ir(fitest_lang.dsl.parse(content.message))
+            .to_timer_objs()
+            .to_json()
+        )
+    )
