@@ -4,7 +4,7 @@
 
 ## fitest-api
 
-API for [fitest-lang](https://github.com/tmfarrell/fitest-lang)
+API for [fitest.io](https://fitest.io)
 
 ### development
 
