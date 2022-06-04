@@ -1,5 +1,3 @@
-# Required substituion variables:
-# - _GCP_FASTAPI_POETRY_DOMAIN
 
 
 steps:
