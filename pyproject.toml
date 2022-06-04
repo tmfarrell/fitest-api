@@ -1,0 +1,59 @@
+[tool.poetry]
+name = "fitest_api"
+version = "0.1.0"
+description = "fitest.api.io"
+authors = ["tmfarrell <tfarrell01@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.70.0"
+fitest-lang = {git = "https://github.com/tmfarrell/fitest_lang.git", tag = "v0.3.0"}
+requests = "^2.27.1"
+
+[tool.poetry.dev-dependencies]
+uvicorn = "*"
+pytest = "6.2.5"
+black = "22.3.0"
+isort = "^5.10.1"
+flake8 = "^4.0.1"
+mypy = "^0.931"
+pytest-cov = "^3.0.0"
+poethepoet = "^0.11.0"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.poe.tasks]
+autoformat.sequence = [
+    {cmd = "black src tests"},
+    {cmd = "isort src tests"},
+]
+
+lint.sequence = [
+    {cmd = "black --check -v src tests"},
+    {cmd = "isort --check -v src tests"},
+    {cmd = "flake8 src tests"},
+    {cmd = "mypy --pretty --ignore-missing-imports src tests"},
+]
+
+test.sequence = ["unit", "integration"]
+
+[tool.poe.tasks.unit]
+sequence = [
+    {cmd = "pytest -s -vv --cov-report xml --cov-report term --cov=fitest_api tests/unit"},
+]
+
+[tool.poe.tasks.integration]
+sequence = [
+    {shell = "pytest -vv --cov-append --cov-report xml --cov-report term --cov=fitest_api tests/integration"},
+]
+
+[tool.poe.tasks.local-server]
+sequence = [
+    {shell = "uvicorn fitest_api.api:app --reload --port 8011"},
+]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
